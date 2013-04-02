@@ -1,7 +1,7 @@
 require 'factory_girl'
 
 FactoryGirl.define do
-  factory :user, :aliases => [:owner, :modifier, :actor] do
+  factory :user, :aliases => [:owner, :modifier, :actor, :manager] do
     sequence(:username) { |n| "user#{n + FACTORY_GIRL_SEQUENCE_OFFSET}" }
     password 'password'
     first_name {Faker::Name.first_name}

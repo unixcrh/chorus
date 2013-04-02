@@ -198,11 +198,13 @@ FixtureBuilder.configure do |fbuilder|
     workspaces << owner.owned_workspaces.create!({:name => "no_sandbox", :summary => "No Sandbox", :public => false}, :without_protection => true)
     workspaces << @empty_workspace = owner.owned_workspaces.create!({:name => "empty", :public => true}, :without_protection => true)
     workspaces << owner.owned_workspaces.create!({:name => "tagged", :public => true, :sandbox => default_schema, :tag_list => ["alpha", "beta"]}, :without_protection => true)
+    workspaces << managed_workspace = FactoryGirl.create(:managed_workspace, :name => "managed_workspace", :public => false, :owner => owner)
 
     fbuilder.name :public, public_workspace
     fbuilder.name :private, private_workspace
     fbuilder.name :search_public, search_public_workspace
     fbuilder.name :search_private, search_private_workspace
+    fbuilder.name :managed, managed_workspace
 
     workspaces << image_workspace = admin.owned_workspaces.create!({:name => "image"}, :without_protection => true)
     image_workspace.image = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'Workspace.jpg'), "image/jpg")

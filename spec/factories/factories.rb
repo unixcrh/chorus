@@ -155,6 +155,10 @@ FactoryGirl.define do
     end
   end
 
+  factory :managed_workspace, :parent => :workspace, :class => ManagedWorkspace do
+    manager
+  end
+
   factory :membership do
     user
     workspace
