@@ -6,6 +6,7 @@
 <div class="after_image{{#if hasImage}} hidden{{/if}}">
     <div class='actions'>
         <h1 title="{{name}}">{{name}}</h1>
+        <div id="manager">{{ managerName }}</div>
         <ul>
             {{#if active}}
                 <li><a class="dialog" href="#" data-entity-id="{{id}}" data-entity-type="workspace" data-workspace-id="{{id}}" data-allow-workspace-attachments="true" data-dialog="NotesNew">{{t "actions.add_note"}}</a></li>

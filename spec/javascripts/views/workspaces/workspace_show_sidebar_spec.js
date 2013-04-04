@@ -9,6 +9,23 @@ describe("chorus.views.WorkspaceShowSidebar", function() {
                 }});
     });
 
+    describe("for a workspace with a manager", function() {
+       beforeEach(function() {
+           this.model = rspecFixtures.managedWorkspace({
+              manager: {
+                  firstName: "John",
+                  lastName: "McJohnFace"
+              }
+           });
+           this.view = new chorus.views.WorkspaceShowSidebar({ model: this.model });
+           this.view.render();
+       });
+
+        it("shows the manager", function() {
+            expect(this.view.$("#manager")).toContainText("John McJohnFace");
+        });
+    });
+
     describe("#render", function() {
         beforeEach(function() {
             this.view = new chorus.views.WorkspaceShowSidebar({model: this.model});

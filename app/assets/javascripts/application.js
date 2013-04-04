@@ -73,6 +73,7 @@
 //= require models/note
 //= require models/insight
 //= require models/filter
+//= require models/workspace
 //= require_tree ./models
 //= require collections/gpdb_data_source_set
 //= require collections/hdfs_entry_set

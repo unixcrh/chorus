@@ -156,6 +156,10 @@ describe WorkspacesController do
     generate_fixture "workspace.json" do
       get :show, :id => workspace.to_param, :show_latest_comments => 'true'
     end
+
+    generate_fixture "managedWorkspace.json" do
+      get :show, :id => workspaces(:managed).to_param
+    end
   end
 
   #Add contexts for the different params and workspaces

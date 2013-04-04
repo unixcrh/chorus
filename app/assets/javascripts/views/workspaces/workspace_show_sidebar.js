@@ -20,7 +20,8 @@ chorus.views.WorkspaceShowSidebar = chorus.views.Sidebar.extend({
             canUpdate: this.model.canUpdate(),
             active: this.model.isActive(),
             canKaggle: chorus.models.Config.instance().get("kaggleConfigured") && this.model.canUpdate() && this.model.isActive(),
-            kaggleUrl: this.model.showUrl()+"/kaggle"
+            kaggleUrl: this.model.showUrl() + "/kaggle",
+            managerName: this.model.manager && (this.model.manager().get('firstName') + " " + this.model.manager().get('lastName'))
         };
     },
 

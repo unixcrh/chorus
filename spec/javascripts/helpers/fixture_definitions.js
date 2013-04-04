@@ -289,6 +289,8 @@ window.rspecFixtureDefinitions = {
 
     workspace: { unique: [ "id" ] },
 
+    managedWorkspace: { unique: [ "id" ] },
+
     workspaceDataset: {
         unique: ["id"],
         children: {

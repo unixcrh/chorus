@@ -14,10 +14,13 @@ describe ManagedWorkspacePresenter, :type => :view do
     let(:hash) { presenter.to_hash }
 
     it "includes the manager" do
-      #puts workspace.class => Workspace
-      presenter.to_hash
-      #hash.should have_key(:manager)
-      #hash[:manager].to_hash.should == (UserPresenter.new(workspace.manager, view).presentation_hash)
+      hash.should have_key(:manager)
+      hash[:manager].to_hash.should eq(UserPresenter.new(workspace.manager, view).presentation_hash)
+    end
+
+    it "includes the workspace presenter data" do
+      hash.delete(:manager)
+      hash.should eq(WorkspacePresenter.new(workspace, view, options).to_hash)
     end
   end
 end
