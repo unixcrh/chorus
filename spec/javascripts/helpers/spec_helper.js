@@ -19,9 +19,8 @@
         return translatedText;
     }
 
-    var loadTemplatesOnce = _.once(function() {
-        var allFixturesLoaded = false;
-
+    var loadedFixtures
+    var loadTemplatesOnce = function(done) {
         // Code that only needs to be run once before all the tests run
         _.debounce = function(func, timeout) { return func; };
 
@@ -36,9 +35,10 @@
 
         $('.jasmine_reporter .title').after('<span class="product_version">Greenplum Chorus 2.2</span>');
 
-        function loadAllFixtures() {
-            var fixtureContainer = $("<div id='fixtures'/>");
-            $("body").append(fixtureContainer);
+        var fixtureContainer = $("<div id='fixtures'/>");
+        $("body").append(fixtureContainer);
+
+        if (!loadedFixtures) {
             return $.ajax({
                 async: true,
                 cache: false,
@@ -46,20 +46,20 @@
                 url: '/__fixtures',
                 success: function(data) {
                     fixtureContainer.append(data);
-                    allFixturesLoaded = true;
+                    loadedFixtures = true
+                    done();
                 },
                 error: function(data) {
                     window.alert("Sorry but I couldn't load the fixtures! Things will go REALLY poorly from here...");
-                    allFixturesLoaded = true;
+                    loadedFixtures = true;
+                    done();
                 }
             });
+        } else {
+            done();
         }
 
-        runs(loadAllFixtures);
-        waitsFor(function() {
-            return allFixturesLoaded;
-        }, "all templates and fixtures to be loaded", 5000);
-    });
+    };
 
     var regexEqualityTester = function(a, b) {
         if(a instanceof RegExp && b instanceof RegExp) {
@@ -85,12 +85,10 @@
     };
     jasmine.getEnv().addEqualityTester(backboneModelEqualityTester);
 
-    beforeEach(function() {
-        loadTemplatesOnce();
-
-        // loadTemplatesOnce does asynchronous ajax requests in a waitsFor
-        runs(function() {
+    beforeEach(function(done) {
+        loadTemplatesOnce(_.bind(function() {
             this.server = sinon.fakeServer.create();
+            this.useFakeTimers = _.bind(sinon.useFakeTimers, sinon);
             chorus.router.unbind();
             delete chorus.page;
             window.qtipElements = {};
@@ -111,7 +109,7 @@
 
             clearRenderedDOM();
 
-            this.addMatchers({
+            addMatchers({
                 toBeA: function(klass) {
                     if (_.isFunction(klass)) {
                         return this.actual instanceof klass;
@@ -367,7 +365,9 @@
             chorus.PageEvents.off();
             chorus.session.sandboxPermissionsCreated = {};
             setLoggedInUser();
-        });
+            console.log(window.jasmine.getEnv().currentSpec.getFullName());
+            done();
+        }, this));
     });
 
     var specWhitelist = {
@@ -384,7 +384,8 @@
 
     afterEach(function() {
         chorus.router.trigger("leaving");
-
+        $(document).off('click.chorus_modal');
+        $(document).off('reveal');
         delete chorus.models.Config._instance;
 
         $.cookie("userId", null);

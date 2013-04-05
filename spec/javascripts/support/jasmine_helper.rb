@@ -49,8 +49,8 @@ class DummyMiddleware
 end
 
 Jasmine.configure do |config|
-  config.boot_dir = Rails.root.join('spec/javascripts/support/old-jasmine-core').to_s
-  config.boot_files = lambda { [Rails.root.join('spec/javascripts/support/old-jasmine-core/boot.js').to_s] }
+  #config.boot_dir = Rails.root.join('spec/javascripts/support/old-jasmine-core').to_s
+  #config.boot_files = lambda { [Rails.root.join('spec/javascripts/support/old-jasmine-core/boot.js').to_s] }
 
   config.add_rack_path('/messages/Messages_en.properties', lambda { MessageMiddleware.new })
   config.add_rack_path('/__fixtures', lambda { FixtureMiddleware.new })

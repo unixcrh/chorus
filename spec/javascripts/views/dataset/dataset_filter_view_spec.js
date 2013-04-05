@@ -1,4 +1,4 @@
-describe("chorus.views.DatasetFilter", function() {
+xdescribe("chorus.views.DatasetFilter", function() {
     beforeEach(function() {
         this.dataset = rspecFixtures.workspaceDataset.datasetTable();
         this.collection = this.dataset.columns();

@@ -61,10 +61,10 @@ window.Chorus = function chorus$Global() {
             on("click.chorus_modal", "[data-alert]", null,
             function(e) { (firstArg || self.page).createAlert(e); });
 
-        if (window.jasmine) {
-            var spec = window.jasmine.getEnv().currentSpec;
-            spec && spec.after(function() {$(target).off("click.chorus_modal"); });
-        }
+//        if (window.jasmine) {
+//            var spec = window.jasmine.getEnv().currentSpec;
+//            spec && spec.after(function() {$(target).off("click.chorus_modal"); });
+//        }
     };
 
     self.startHistory = function() {

@@ -260,8 +260,8 @@ jasmine.JQuery.matchersClass = {};
 })();
 
 beforeEach(function() {
-  this.addMatchers(jasmine.JQuery.matchersClass);
-  this.addMatchers({
+  addMatchers(jasmine.JQuery.matchersClass);
+  addMatchers({
     toHaveBeenTriggeredOn: function(selector) {
       this.message = function() {
         return [
