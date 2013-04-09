@@ -19,7 +19,7 @@
         return translatedText;
     }
 
-    var loadedFixtures
+    var loadedFixtures;
     var loadTemplatesOnce = function(done) {
         // Code that only needs to be run once before all the tests run
         _.debounce = function(func, timeout) { return func; };
@@ -46,7 +46,7 @@
                 url: '/__fixtures',
                 success: function(data) {
                     fixtureContainer.append(data);
-                    loadedFixtures = true
+                    loadedFixtures = true;
                     done();
                 },
                 error: function(data) {
@@ -85,27 +85,18 @@
     };
     jasmine.getEnv().addEqualityTester(backboneModelEqualityTester);
 
+    var query = jasmine.QueryString({
+        getWindowLocation: function() { return window.location; }
+    });
+    var debugging = query.getParam('debug') === 'true';
+
     beforeEach(function(done) {
         loadTemplatesOnce(_.bind(function() {
-            this.server = sinon.fakeServer.create();
+            var server = this.server = sinon.fakeServer.create();
             this.useFakeTimers = _.bind(sinon.useFakeTimers, sinon);
             chorus.router.unbind();
             delete chorus.page;
             window.qtipElements = {};
-
-            this.renderDOM = function(content) {
-                return $('#jasmine_content').html(content);
-            };
-
-            this.showInJasmine = function(el) {
-                var $j = $("#jasmine_content");
-                var originalRight = $j.css("right");
-
-                $j.css("right", 0).append(el);
-                this.after(function() {
-                    $j.css("right", originalRight);
-                });
-            };
 
             clearRenderedDOM();
 
@@ -307,19 +298,19 @@
                 },
 
                 toHaveBeenFetched: function() {
-                    return !!this.spec.server.lastFetchFor(this.actual);
+                    return !!server.lastFetchFor(this.actual);
                 },
 
                 toHaveAllBeenFetched: function() {
-                    return !!this.spec.server.lastFetchAllFor(this.actual);
+                    return !!server.lastFetchAllFor(this.actual);
                 },
 
                 toHaveBeenCreated: function() {
-                    return !!this.spec.server.lastCreateFor(this.actual);
+                    return !!server.lastCreateFor(this.actual);
                 },
 
                 toHaveBeenUpdated: function() {
-                    return !!this.spec.server.lastUpdateFor(this.actual);
+                    return !!server.lastUpdateFor(this.actual);
                 },
 
                 toHaveAttrs: function(args) {
@@ -365,7 +356,12 @@
             chorus.PageEvents.off();
             chorus.session.sandboxPermissionsCreated = {};
             setLoggedInUser();
-            console.log(window.jasmine.getEnv().currentSpec.getFullName());
+            if (debugging) {
+                /*jshint undef:false */
+                console.log(window.jasmine.getEnv().currentSpec.getFullName());
+                /*jshint undef:true */
+
+            }
             done();
         }, this));
     });

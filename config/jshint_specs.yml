@@ -96,6 +96,7 @@ predef:             # Names of predefined global variables - comma-separated str
   - expect
   - beforeEach
   - afterEach
+  - addMatchers
   - mostRecentAjaxRequest
   - clearAjaxRequests
   - sinon

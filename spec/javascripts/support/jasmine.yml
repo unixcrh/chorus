@@ -52,17 +52,17 @@ helpers:
  #   - **/*[sS]pec.js
  #
 spec_files:
-#  - "alerts/**/*[sS]pec.js" # bad
+#  - "alerts/**/*[sS]pec.js" # bad (stops)
   - "collections/**/*[sS]pec.js"
   - "dialogs/**/*[sS]pec.js" # bad
   - "helper_specs/**/*[sS]pec.js"
   - "mixins/**/*[sS]pec.js"
-  - "models/**/*[sS]pec.js"
-  - "pages/**/*[sS]pec.js" # bad
+#  - "models/**/*[sS]pec.js"
+#  - "pages/**/*[sS]pec.js" # bad
   - "presenters/**/*[sS]pec.js"
   - "utilities/**/*[sS]pec.js"
   - "vendor/**/*[sS]pec.js"
-  - "views/**/*[sS]pec.js" #bad
+#  - "views/**/*[sS]pec.js" #bad
   - "*[sS]pec.js"
 ##  - "**/*[sS]pec.js"
 
