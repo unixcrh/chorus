@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), 'spec_helper')
+puts require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper')) ; puts __FILE__
 
 describe "CSV Uploads", :greenplum_integration do
   let(:workspace) { workspaces(:real) }

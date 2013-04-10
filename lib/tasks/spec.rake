@@ -1,4 +1,5 @@
 unless Rails.env.production?
+  require 'rspec/core/rake_task'
   task :default => [:spec]
 
   task :data_source_host_check_stale do

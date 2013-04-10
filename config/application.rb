@@ -2,10 +2,17 @@ require File.expand_path('../boot', __FILE__)
 require_relative '../app/models/chorus_config'
 
 # Pick the frameworks you want:
+require "rails"
+require "rails/railtie"
 require "active_record/railtie"
 require "action_controller/railtie"
 require "active_resource/railtie"
-require "sprockets/railtie"
+require 'paperclip'
+require 'sunspot_rails'
+require 'sequel/no_core_ext'
+require 'attr_encrypted' #if you load attr_encrypted before sequel, it blows up saying 'sequel::model' is undefined
+require 'will_paginate'
+require "sprockets/railtie" # should be last to run all the initializers
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line

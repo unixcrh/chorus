@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/GreenplumChorus/jetpack.git
-  revision: 529c16d730de7e15840f0b2826254faeaf67f53e
+  revision: 87f3ef39643936392c4a6d8edf90e563d4f0b518
   specs:
     jetpack (0.1.2)
 

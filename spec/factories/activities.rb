@@ -1,6 +1,7 @@
 require 'factory_girl'
 
 FactoryGirl.define do
+  puts "define factories"
   factory :comment do
     event factory: :user_created_event
     author factory: :user

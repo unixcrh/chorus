@@ -1,3 +1,4 @@
+require 'scrolls'
 require 'clockwork'
 require 'queue_classic'
 

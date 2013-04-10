@@ -1,3 +1,4 @@
+require "sunspot"
 class Sunspot::Query::Dismax
 
   alias_method :the_old_to_params, :to_params

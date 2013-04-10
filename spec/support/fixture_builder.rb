@@ -2,6 +2,8 @@ require_relative "./database_integration/greenplum_integration"
 require_relative "./database_integration/oracle_integration"
 require_relative "./database_integration/hdfs_integration"
 require_relative "./current_user"
+require "fixture_builder"
+require 'faker'
 require 'rr'
 
 def FixtureBuilder.password

@@ -1,3 +1,4 @@
+require 'scrolls'
 unless ENV["LOG_LEVEL"]
   rails_scrolls_level_map = {
       0 => 7,

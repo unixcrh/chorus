@@ -1,3 +1,4 @@
+require 'chorusgnip'
 module Gnip
   class DataSourceRegistrar
 

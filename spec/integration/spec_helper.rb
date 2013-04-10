@@ -5,12 +5,15 @@ require File.expand_path("../../../config/environment", __FILE__)
 
 require 'rspec/rails'
 require 'capybara/rspec'
+require 'capybara-screenshot'
 require 'headless'
 require 'yaml'
 require 'timeout'
+require 'timecop'
 require 'capybara/poltergeist'
 require 'factory_girl'
 require 'database_cleaner'
+require 'sunspot_matchers'
 
 headless = Headless.new
 headless.start
@@ -37,7 +40,8 @@ end
 Dir[File.join(File.dirname(__FILE__), 'helpers', "**", "*")].each {|f| require f}
 Dir[File.join(File.dirname(__FILE__), 'support', "**", "*")].each {|f| require f}
 FACTORY_GIRL_SEQUENCE_OFFSET = 44444
-FactoryGirl.find_definitions
+puts "find definitions"
+#FactoryGirl.find_definitions
 require "#{Rails.root}/spec/support/fixture_builder.rb"
 require Rails.root.join('spec/external_service_detector.rb').to_s
 

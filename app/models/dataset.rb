@@ -1,3 +1,5 @@
+require 'schema'
+
 class Dataset < ActiveRecord::Base
   include Stale
   include SoftDelete

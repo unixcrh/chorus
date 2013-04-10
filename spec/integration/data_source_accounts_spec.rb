@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), 'spec_helper')
+puts require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper')) ; puts __FILE__
 
 describe "Data Source Accounts" do
   let(:data_source) { GreenplumIntegration.real_data_source }

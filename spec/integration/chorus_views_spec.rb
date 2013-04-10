@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), 'spec_helper')
+puts require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper')) ; puts __FILE__
 
 describe "Chorus Views", :greenplum_integration do
   describe "Create" do

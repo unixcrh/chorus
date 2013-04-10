@@ -1,4 +1,5 @@
 unless Rails.env.production?
+  require 'rspec/core/rake_task'
   namespace :api_docs do
     STDOUT.sync = true
 

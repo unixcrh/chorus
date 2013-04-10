@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), 'spec_helper')
+puts require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper')) ; puts __FILE__
 
 describe "500 Internal Server Error" do
   let(:workspace) { workspaces(:public) }

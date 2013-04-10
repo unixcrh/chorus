@@ -1,4 +1,4 @@
-require_relative '../spec_helper'
+require File.expand_path(File.join(File.dirname(__FILE__), '..', 'spec_helper'))
 
 describe "Data Sources", :greenplum_integration do
   describe "adding a greenplum instance" do

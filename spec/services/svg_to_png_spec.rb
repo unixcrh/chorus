@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'chunky_png'
 
 describe SvgToPng do
   describe ".new" do
