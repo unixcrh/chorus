@@ -1,7 +1,6 @@
 describe("chorus.alerts.WorkfileConflict", function() {
     beforeEach(function() {
         this.modalSpy = stubModals();
-        this.useFakeTimers();
 
         this.workfile = rspecFixtures.workfile.sql({ versionInfo: { content : "version content" } });
         this.message = "This work file has been modified by Christine Klunk";

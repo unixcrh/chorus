@@ -19,8 +19,13 @@
         return translatedText;
     }
 
-    var loadedFixtures;
+    var loadedFixtures = false;
     var loadTemplatesOnce = function(done) {
+        if (loadedFixtures) {
+            done();
+            return;
+        }
+
         // Code that only needs to be run once before all the tests run
         _.debounce = function(func, timeout) { return func; };
 
@@ -38,27 +43,22 @@
         var fixtureContainer = $("<div id='fixtures'/>");
         $("body").append(fixtureContainer);
 
-        if (!loadedFixtures) {
-            return $.ajax({
-                async: true,
-                cache: false,
-                dataType: 'html',
-                url: '/__fixtures',
-                success: function(data) {
-                    fixtureContainer.append(data);
-                    loadedFixtures = true;
-                    done();
-                },
-                error: function(data) {
-                    window.alert("Sorry but I couldn't load the fixtures! Things will go REALLY poorly from here...");
-                    loadedFixtures = true;
-                    done();
-                }
-            });
-        } else {
-            done();
-        }
-
+        return $.ajax({
+            async: true,
+            cache: false,
+            dataType: 'html',
+            url: '/__fixtures',
+            success: function(data) {
+                fixtureContainer.append(data);
+                loadedFixtures = true;
+                done();
+            },
+            error: function(data) {
+                window.alert("Sorry but I couldn't load the fixtures! Things will go REALLY poorly from here...");
+                loadedFixtures = true;
+                done();
+            }
+        });
     };
 
     var regexEqualityTester = function(a, b) {
@@ -85,10 +85,11 @@
     };
     jasmine.getEnv().addEqualityTester(backboneModelEqualityTester);
 
-    var query = jasmine.QueryString({
-        getWindowLocation: function() { return window.location; }
+    var query = new jasmine.QueryString({
+        getWindowLocation: function() { return window.location;
+        }
     });
-    var debugging = query.getParam('debug') === 'true';
+    var debugging = query.getParam('debug') === true;
 
     beforeEach(function(done) {
         loadTemplatesOnce(_.bind(function() {
@@ -100,7 +101,7 @@
 
             clearRenderedDOM();
 
-            addMatchers({
+            jasmine.getEnv().addMatchers({
                 toBeA: function(klass) {
                     if (_.isFunction(klass)) {
                         return this.actual instanceof klass;
@@ -379,6 +380,7 @@
     };
 
     afterEach(function() {
+        clock.uninstall();  // workaround to jasmine head bug
         chorus.router.trigger("leaving");
         $(document).off('click.chorus_modal');
         $(document).off('reveal');

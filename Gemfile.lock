@@ -68,6 +68,12 @@ GIT
       multi_json (~> 1.0)
 
 GIT
+  remote: git://github.com/pivotal-chorus/jasmine.git
+  revision: fba3b0868cc361c13e8a577b4f969240561248e3
+  specs:
+    jasmine-core (2.0.0.alpha)
+
+GIT
   remote: git://github.com/pivotal/jasmine-gem.git
   revision: 26e394c1305e5ea2f154c79e6225c6864c933148
   branch: 2_0
@@ -109,11 +115,6 @@ GIT
       nokogiri
       sunspot (= 2.0.0.pre.120720)
     sunspot_solr (2.0.0.pre.120720)
-
-PATH
-  remote: ../jasmine
-  specs:
-    jasmine-core (2.0.0.alpha)
 
 GEM
   remote: https://rubygems.org/
@@ -319,6 +320,7 @@ GEM
     rspec-core (2.12.2)
     rspec-expectations (2.12.1)
       diff-lcs (~> 1.1.3)
+    rspec-instafail (0.2.4)
     rspec-mocks (2.12.2)
     rspec-rails (2.12.0)
       actionpack (>= 3.0)

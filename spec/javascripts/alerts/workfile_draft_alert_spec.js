@@ -1,6 +1,5 @@
 describe("chorus.alerts.WorkfileDraft", function() {
     beforeEach(function() {
-        this.useFakeTimers();
         this.workfile = rspecFixtures.workfile.sql();
         this.alert = new chorus.alerts.WorkfileDraft({ model: this.workfile });
         this.alert.render();

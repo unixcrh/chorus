@@ -13,8 +13,8 @@ describe("chorus.views.visualizations.Heatmap", function() {
         centerY = chorus.svgHelpers.centerY;
 
     beforeEach(function() {
-        this.addMatchers(chorus.svgHelpers.matchers);
-        this.addMatchers({
+        addMatchers(chorus.svgHelpers.matchers);
+        addMatchers({
             toAllBeEqual: function() {
                 var firstValue = this.actual[0];
                 return _.all(this.actual, function(element) {

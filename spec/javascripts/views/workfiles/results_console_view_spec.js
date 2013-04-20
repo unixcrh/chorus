@@ -368,7 +368,7 @@ describe("chorus.views.ResultsConsoleView", function() {
             }
 
             beforeEach(function() {
-                this.clock = this.useFakeTimers();
+                clock.install();
                 spyOn(window, "clearInterval");
                 spyOn(this.view, "closeError").andCallThrough();
 
@@ -386,14 +386,14 @@ describe("chorus.views.ResultsConsoleView", function() {
 
             it("sets a delay to start a spinner", function() {
                 expect(this.view.$(".spinner")).toHaveClass("hidden");
-                this.clock.tick(300);
+                clock.tick(300);
                 expect(this.view.$(".spinner")).not.toHaveClass("hidden");
             });
 
             it("updates the time", function() {
-                this.clock.tick(1000);
+                clock.tick(1000);
                 expect(this.view.$(".elapsed_time").text().trim()).toMatchTranslation("results_console_view.elapsed", { sec: 1 });
-                this.clock.tick(10000);
+                clock.tick(10000);
                 expect(this.view.$(".elapsed_time").text().trim()).toMatchTranslation("results_console_view.elapsed", { sec: 11 });
             });
 

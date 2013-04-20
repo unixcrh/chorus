@@ -64,7 +64,7 @@ group :test, :development, :integration, :packaging, :ci_jasmine, :ci_legacy do
   gem 'rake',                    :require => false
   gem 'ruby-debug',              :require => false
   gem 'jasmine', :github => 'pivotal/jasmine-gem', :branch => "2_0"
-  gem 'jasmine-core', :path => "../jasmine"
+  gem 'jasmine-core', :github => 'pivotal-chorus/jasmine'
   gem 'rspec_api_documentation', :github => "GreenplumChorus/rspec_api_documentation"
   gem 'forgery'
   gem 'sunspot_matchers', :github => "pivotal/sunspot_matchers", :branch => "sunspot_2_pre"

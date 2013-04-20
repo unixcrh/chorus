@@ -459,7 +459,7 @@ describe("chorus.dialogs.ExistingTableImportCSV", function() {
 
     describe("scrolling the data", function() {
         beforeEach(function() {
-            this.addMatchers(chorus.svgHelpers.matchers);
+            addMatchers(chorus.svgHelpers.matchers);
 
             this.csvOptions = {
                 tableName: 'existing_table',

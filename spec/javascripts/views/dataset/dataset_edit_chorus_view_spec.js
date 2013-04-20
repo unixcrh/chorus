@@ -1,10 +1,9 @@
 describe("chorus.views.DatasetEditChorusView", function() {
     beforeEach(function() {
-
         this.dataset = rspecFixtures.workspaceDataset.chorusView();
         this.view = new chorus.views.DatasetEditChorusView({ model: this.dataset });
         $("#jasmine_content").append(this.view.el);
-        this.clock = this.useFakeTimers();
+        clock.install();
 
         // in IE8, we can't 'select' a textrange whose textarea is not on the DOM
         if ($.browser.msie) {
@@ -16,8 +15,6 @@ describe("chorus.views.DatasetEditChorusView", function() {
             this.codeMirrorOptions = opts;
             return originalFromTextArea(textarea, opts);
         }, this));
-
-        stubDefer();
     });
 
     context("#setup", function() {
@@ -29,6 +26,7 @@ describe("chorus.views.DatasetEditChorusView", function() {
     describe("#render", function() {
         beforeEach(function() {
             this.view.render();
+            clock.tick(1);
         });
 
         it("displays the query", function() {
@@ -76,7 +74,7 @@ describe("chorus.views.DatasetEditChorusView", function() {
             this.view.editor.setValue("select * from table_abc");
             spyOn(this.view.model, "save");
             chorus.PageEvents.trigger("dataset:saveEdit");
-            this.clock.tick(1000);
+            clock.tick(1000);
 
         });
         context("when save succeed", function() {

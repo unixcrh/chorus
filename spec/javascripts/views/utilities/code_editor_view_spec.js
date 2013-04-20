@@ -9,7 +9,7 @@ describe("chorus.views.CodeEditorView", function() {
             lineWrapping: false
         });
         $("#jasmine_content").append(this.view.el);
-        this.clock = this.useFakeTimers();
+        clock.install();
 
         // in IE8, we can't 'select' a textrange whose textarea is not on the DOM
         if ($.browser.msie) {
@@ -21,7 +21,7 @@ describe("chorus.views.CodeEditorView", function() {
     it("defers call to CodeMirror", function() {
         this.view.render();
         expect(CodeMirror.fromTextArea).not.toHaveBeenCalled();
-        this.clock.tick(1000);
+        clock.tick(1000);
         expect(CodeMirror.fromTextArea).toHaveBeenCalled();
     });
 

@@ -210,7 +210,7 @@ describe("chorus.views.TagsInput", function() {
     });
 
     describe("escaping the tags", function() {
-        beforeEach(function() {
+        beforeEach(function(done) {
             this.server.reset();
             view.tags.reset();
             view.render();
@@ -220,9 +220,13 @@ describe("chorus.views.TagsInput", function() {
             var event = $.Event('keyup');
             event.keyCode = 115; // s
             input.trigger(event);
-            waitsFor(_.bind(function() {
-                return this.server.requests.length > 0;
-            }, this));
+
+            var interval = setInterval(_.bind(function () {
+                if (this.server.requests.length > 0) {
+                    clearInterval(interval);
+                    done();
+                }
+            }, this), 5);
         });
 
         it("should escape malicious tags", function() {
@@ -235,15 +239,19 @@ describe("chorus.views.TagsInput", function() {
     });
 
     describe("displaying the list of suggested tags (autocomplete)", function() {
-        beforeEach(function() {
+        beforeEach(function(done) {
             var input = view.$('input.tag_editor');
             input.val("s");
             var event = $.Event('keyup');
             event.keyCode = 115; // s
             input.trigger(event);
-            waitsFor(_.bind(function() {
-                return this.server.requests.length > 0;
-            }, this));
+
+            var interval = setInterval(_.bind(function () {
+                if (this.server.requests.length > 0) {
+                    clearInterval(interval);
+                    done();
+                }
+            }, this), 5);
         });
 
         it("escapes malicious tags", function() {
@@ -302,13 +310,14 @@ describe("chorus.views.TagsInput", function() {
             this.input.trigger(up);
         });
 
-        afterEach(function() {
-            waitsFor(_.bind(function() {
-                return this.server.requests.length > 0;
-            }, this));
-            runs(_.bind(function() {
-                this.server.lastFetch().succeed();
-            }, this));
+        afterEach(function(done) {
+            var interval = setInterval(_.bind(function () {
+                if (this.server.requests.length > 0) {
+                    clearInterval(interval);
+                    this.server.lastFetch().succeed();
+                    done();
+                }
+            }, this), 5);
         });
 
         it("behaves like enter key press", function() {
@@ -327,7 +336,7 @@ describe("chorus.views.TagsInput", function() {
     describe("autocomplete", function() {
         var input;
 
-        beforeEach(function() {
+        beforeEach(function(done) {
             var suggestions = rspecFixtures.tagSetJson({
                 response: [{name: "alpha"}, {name: "beta"}, {name: "gamma"}]
             });
@@ -339,12 +348,14 @@ describe("chorus.views.TagsInput", function() {
             var event = $.Event('keyup');
             event.keyCode = 115; // s
             input.trigger(event);
-            waitsFor(_.bind(function() {
-                return this.server.requests.length > 0;
-            }, this));
-            runs(_.bind(function() {
-                this.server.lastFetch().succeed(suggestions.response, suggestions.pagination);
-            }, this));
+
+            var interval = setInterval(_.bind(function () {
+                if (this.server.requests.length > 0) {
+                    clearInterval(interval);
+                    this.server.lastFetch().succeed(suggestions.response, suggestions.pagination);
+                    done();
+                }
+            }, this), 5);
         });
 
         it("does not select anything by default", function() {

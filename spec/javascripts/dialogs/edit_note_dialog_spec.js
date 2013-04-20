@@ -9,9 +9,10 @@ describe("chorus.dialogs.EditNote", function() {
         $('#jasmine_content').append(this.dialog.el);
 
         spyOn(this.dialog, "makeEditor").andCallThrough();
-        stubDefer();
 
+        clock.install();
         this.dialog.render();
+        clock.tick(1);
     });
 
     it("displays 'edit this note' as the title", function() {
@@ -24,6 +25,7 @@ describe("chorus.dialogs.EditNote", function() {
             this.dialog = new chorus.dialogs.EditNote({ activity: this.note });
             $('#jasmine_content').append(this.dialog.el);
             this.dialog.render();
+            clock.tick(1);
         });
 
         it("displays 'edit this insight' as the title", function() {

@@ -88,15 +88,13 @@ predef:             # Names of predefined global variables - comma-separated str
   - xit
   - specify
   - xspecify
-  - runs
-  - waits
-  - waitsFor
   - itBehavesLike
   - xitBehavesLike
   - expect
   - beforeEach
   - afterEach
   - addMatchers
+  - clock
   - mostRecentAjaxRequest
   - clearAjaxRequests
   - sinon

@@ -7,24 +7,24 @@ describe("chorus.views.TextWorkfileContentView", function() {
         this.view = new chorus.views.TextWorkfileContent({model: this.textfile, hotkeys: { 'r': 'some:event' }});
         this.saveInterval = this.view.saveInterval;
         $("#jasmine_content").append(this.view.el);
-        this.clock = this.useFakeTimers();
+        clock.install();
 
         // in IE8, we can't 'select' a textrange whose textarea is not on the DOM
         if($.browser.msie) {
             spyOn(window.TextRange.prototype, 'select');
         }
         spyOn(CodeMirror, "fromTextArea").andCallThrough();
-
-        stubDefer();
     });
 
     describe("hotkey options", function() {
         beforeEach(function() {
             this.view = new chorus.views.TextWorkfileContent({model: this.textfile, hotkeys: {a: "whatever", b: "something_else"}});
             this.view.render();
+            clock.tick(1);
         });
 
         it("correctly sets the extraKeys on the CodeMirror options", function() {
+            expect(CodeMirror.fromTextArea).toHaveBeenCalled();
             var opts = CodeMirror.fromTextArea.mostRecentCall.args[1];
             expect(opts.extraKeys[_.str.capitalize(chorus.hotKeyMeta) + "-A"]).toBeDefined();
             expect(opts.extraKeys[_.str.capitalize(chorus.hotKeyMeta) + "-B"]).toBeDefined();
@@ -34,6 +34,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
     describe("#render", function() {
         beforeEach(function() {
             this.view.render();
+            clock.tick(1);
         });
 
         describe("#editable", function() {
@@ -41,6 +42,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
                 spyOn(this.textfile, "canEdit").andReturn(true);
                 this.view = new chorus.views.TextWorkfileContent({model: this.textfile});
                 this.view.render();
+                clock.tick(1);
                 expect(this.view.editor.getOption("readOnly")).toBe(false);
             });
 
@@ -48,6 +50,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
                 spyOn(this.textfile, "canEdit").andReturn(false);
                 this.view = new chorus.views.TextWorkfileContent({model: this.textfile});
                 this.view.render();
+                clock.tick(1);
                 expect(this.view.editor.getOption("readOnly")).toBe("nocursor");
             });
         });
@@ -75,6 +78,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
                 this.textfile.set({ fileType: "sql" });
                 this.view = new chorus.views.TextWorkfileContent({model: this.textfile});
                 this.view.render();
+                clock.tick(1);
             });
 
             it("uses the 'text/x-plsql' mode", function() {
@@ -88,6 +92,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
             spyOn(this.textfile, "canEdit").andReturn(false);
             this.view = new chorus.views.TextWorkfileContent({model: this.textfile});
             this.view.render();
+            clock.tick(1);
         });
 
         it("has no save button", function() {
@@ -102,6 +107,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
     describe("#editText", function() {
         beforeEach(function() {
             this.view.render();
+            clock.tick(1);
 
             this.view.editor.setCursor(500, 500);
             spyOn(this.view.editor, "focus");
@@ -134,6 +140,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
     describe("#autosave", function() {
         beforeEach(function() {
             this.view.render();
+            clock.tick(1);
         });
 
         describe("when the file is changed", function() {
@@ -143,13 +150,13 @@ describe("chorus.views.TextWorkfileContentView", function() {
 
             describe("when the file is changed again", function() {
                 beforeEach(function() {
-                    this.clock.tick(10);
+                    clock.tick(10);
                     this.view.editor.setValue("Foo, Bar, Baz");
                 });
 
                 describe("when the timeout elapses", function() {
                     beforeEach(function() {
-                        this.clock.tick(this.saveInterval);
+                        clock.tick(this.saveInterval);
                     });
 
                     it("only saves the file once", function() {
@@ -162,7 +169,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
 
             describe("when the timeout elapses", function() {
                 beforeEach(function() {
-                    this.clock.tick(this.saveInterval);
+                    clock.tick(this.saveInterval);
                 });
 
                 it("creates a draft", function() {
@@ -174,7 +181,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
 
                 describe("when the timeout elapses again, with no changes", function() {
                     beforeEach(function() {
-                        this.clock.tick(this.saveInterval);
+                        clock.tick(this.saveInterval);
                     });
 
                     it("does not save the draft again", function() {
@@ -189,7 +196,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
                         this.server.lastCreate().succeed([]);
                         // start timer directly to imply change on code mirror
                         this.view.startTimer();
-                        this.clock.tick(this.saveInterval);
+                        clock.tick(this.saveInterval);
                     });
 
                     it("updates the draft", function() {
@@ -221,6 +228,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
             this.textfile.set({"latestVersionNum": 2});
 
             this.view.render();
+            clock.tick(1);
             this.view.editText();
             this.view.editor.setValue('This should be a big enough text, okay?');
             this.view.editor.setCursor(0, 19);
@@ -238,7 +246,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
                 beforeEach(function() {
                     chorus.modal = null;
                     chorus.PageEvents.trigger("file:replaceCurrentVersion");
-                    this.clock.tick(10000);
+                    clock.tick(10000);
                 });
 
                 it("calls save", function() {
@@ -317,7 +325,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
                 beforeEach(function() {
                     chorus.modal = null;
                     chorus.PageEvents.trigger("file:replaceCurrentVersionWithSelection");
-                    this.clock.tick(10000);
+                    clock.tick(10000);
                 });
 
                 it("calls save", function() {
@@ -402,6 +410,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
     describe("when navigating away", function() {
         beforeEach(function() {
             this.view.render();
+            clock.tick(1);
         });
 
         context("when the file has been changed", function() {
@@ -431,6 +440,7 @@ describe("chorus.views.TextWorkfileContentView", function() {
         beforeEach(function() {
             spyOn(chorus.PageEvents, "trigger");
             this.view.render();
+            clock.tick(1);
             this.view.editor.setValue("content\n\nmore content");
         });
 
