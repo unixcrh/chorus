@@ -117,10 +117,11 @@ chorus.models.Workspace = chorus.models.Base.extend({
     },
 
     displayShortName:function (length) {
-        length = length || 20;
-
+//        length = length || 20;
+//
         var name = this.displayName() || "";
-        return (name.length < length) ? name : name.slice(0, length) + "...";
+//        return (name.length < length) ? name : name.slice(0, length) + "...";
+        return name;
     },
 
     fetchImageUrl:function (options) {
