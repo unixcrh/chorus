@@ -18,6 +18,7 @@ gem 'tabcmd_gem', :github => "GreenplumChorus/tableau"
 gem 'chorusgnip', :github => 'GreenplumChorus/gnip'
 gem "logger-syslog", :github => 'scambra/logger-syslog'
 gem 'newrelic_rpm'
+gem 'nokogiri'
 
 platform :jruby do
   gem 'jruby-openssl', :require => false
